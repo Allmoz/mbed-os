@@ -1280,7 +1280,8 @@
         "device_has_add": [
             "CAN",
             "SERIAL_ASYNCH",
-            "FLASH"
+            "FLASH",
+            "USBDEVICE"
         ],
         "device_has_remove": [
             "LPTICKER"
