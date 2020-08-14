@@ -135,6 +135,7 @@
         ],
         "extra_labels": [
             "TFM",
+            "TFM_V1_1",
             "TFM_V8M"
         ],
         "device_has": [
@@ -5636,15 +5637,15 @@
             "MPU"
         ]
     },
-    "NUMAKER_IOT_M252": {
+    "MCU_M251": {
         "core": "Cortex-M23",
+        "public": false,
         "trustzone": false,
         "is_disk_virtual": true,
         "default_toolchain": "ARMC6",
         "extra_labels": [
             "NUVOTON",
             "M251",
-            "M252KG6AE",
             "FLASH_CMSIS_ALGO"
         ],
         "macros_add": [
@@ -5657,6 +5658,30 @@
             "IAR"
         ],
         "config": {
+            "usb-uart": {
+                "help": "Configure USB_UART. USB_UART and USB_UART_TX/USB_UART_RX must be consistent.",
+                "value": null
+            },
+            "usb-uart-tx": {
+                "help": "Configure USBTX. USB_UART and USBTX/USBRX must be consistent.",
+                "value": null
+            },
+            "usb-uart-rx": {
+                "help": "Configure USBRX. USB_UART and USBTX/USBRX must be consistent.",
+                "value": null
+            },
+            "stdio-uart": {
+                "help": "Configure STDIO_UART. STDIO_UART and STDIO_UART_TX/STDIO_UART_RX must be consistent. STDIO_UART defaults to USB_UART.",
+                "value": null
+            },
+            "stdio-uart-tx": {
+                "help": "Configure STDIO_UART_TX. STDIO_UART and STDIO_UART_TX/STDIO_UART_RX must be consistent. STDIO_UART_TX defaults to USBTX.",
+                "value": null
+            },
+            "stdio-uart-rx": {
+                "help": "Configure STDIO_UART_RX. STDIO_UART and STDIO_UART_TX/STDIO_UART_RX must be consistent. STDIO_UART_RX defaults to USBRX.",
+                "value": null
+            },
             "gpio-irq-debounce-enable": {
                 "help": "Enable GPIO IRQ debounce",
                 "value": 0
@@ -5715,13 +5740,6 @@
         "components_add": [
             "FLASHIAP"
         ],
-        "detect_code": [
-            "1309"
-        ],
-        "release_versions": [
-            "5"
-        ],
-        "device_name": "M252KG6AE",
         "sectors": [
             [
                 0,
@@ -5729,6 +5747,24 @@
             ]
         ],
         "bootloader_supported": true
+    },
+    "NUMAKER_IOT_M252": {
+        "inherits": [
+            "MCU_M251"
+        ],
+        "detect_code": [
+            "1309"
+        ],
+        "release_versions": [
+            "2",
+            "5"
+        ],
+        "device_name": "M252KG6AE",
+        "overrides": {
+            "usb-uart": "UART_0",
+            "usb-uart-tx": "PB_13",
+            "usb-uart-rx": "PB_12"
+        }
     },
     "TMPM4G9": {
         "inherits": [
@@ -6195,6 +6231,73 @@
         },
         "program_cycle_s": 10
     },
+    "CYTFM_064B0S2_4343W": {
+        "inherits": [
+            "MCU_PSOC6_M4"
+        ],
+        "supported_form_factors": [
+            "ARDUINO"
+        ],
+        "features_add": [
+            "BLE",
+            "EXPERIMENTAL_API",
+            "PSA"
+        ],
+        "components_add": [
+            "WHD",
+            "4343W",
+            "CYW43XXX",
+            "TFM_S_FW"
+        ],
+        "components_remove": [
+            "QSPIF",
+            "CM0P_SLEEP"
+        ],
+        "device_has_remove": [
+            "ANALOGOUT",
+            "QSPI",
+            "TRNG",
+            "CRC"
+        ],
+        "extra_labels_add": [
+            "PSOC6_02",
+            "CORDIO",
+            "TFM",
+            "TFM_V1_0",
+            "TFM_DUALCPU"
+        ],
+        "macros_add": [
+            "CYB0644ABZI_S2D44",
+            "CY_IPC_DEFAULT_CFG_DISABLE",
+            "CYBSP_WIFI_CAPABLE",
+            "MXCRYPTO_DISABLED",
+            "TFM_MULTI_CORE_MULTI_CLIENT_CALL=1"
+        ],
+        "detect_code": [
+            "1910"
+        ],
+        "forced_reset_timeout": 5,
+        "hex_filename": "tfm_s.hex",
+        "cm0_img_id": 1,
+        "cm4_img_id": 16,
+        "boot_scheme": "multi_image",
+        "policy_file": "policy_multi_CM0_CM4_tfm.json",
+        "post_binary_hook": {
+            "function": "PSOC6Code.sign_image"
+        },
+        "overrides": {
+            "network-default-interface-type": "WIFI"
+        },
+        "program_cycle_s": 10,
+        "tfm_target_name": "psoc64",
+        "tfm_bootloader_supported": false,
+        "tfm_default_toolchain": "GNUARM",
+        "tfm_supported_toolchains": [
+            "GNUARM"
+        ],
+        "tfm_delivery_dir": "TARGET_Cypress/TARGET_PSOC6/TARGET_CYTFM_064B0S2_4343W/COMPONENT_TFM_S_FW",
+        "TFM_OUTPUT_EXT": "hex"
+    },
     "CYSBSYSKIT_01": {
         "inherits": [
             "MCU_PSOC6_M4"
@@ -6559,7 +6662,34 @@
         "macros_add": [
             "CONFIG_GPIO_AS_PINRESET"
         ]
-},
+    },
+    "S1SBP6A": {
+        "inherits": ["Target"],
+        "core": "Cortex-M4F",
+        "supported_toolchains": [
+            "GCC_ARM",
+            "ARMC6"
+        ],
+        "default_toolchain": "GCC_ARM",
+        "extra_labels": [
+            "Samsung",
+            "SIDK_S1SBP6A"
+        ],
+        "device_has": [
+            "USTICKER",
+            "INTERRUPTIN",
+            "SERIAL",
+            "MPU",
+            "SPI",
+            "I2C",
+            "RTC",
+            "FLASH",
+            "SLEEP",
+            "WATCHDOG"
+        ],
+        "release_versions": ["5"],
+        "detect_code": ["3703"]
+    },
     "__build_tools_metadata__": {
         "version": "1",
         "public": false
