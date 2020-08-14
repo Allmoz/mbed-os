@@ -6,8 +6,8 @@
 set(unittest-includes ${unittest-includes}
   .
   ..
-  ../connectivity/mbedtls/include/mbedtls/
-  ../connectivity/mbedtls/platform/inc/
+  ../features/mbedtls/inc/mbedtls/
+  ../features/mbedtls/platform/inc/
   ../features/frameworks/mbed-trace/mbed-trace/
 )
 

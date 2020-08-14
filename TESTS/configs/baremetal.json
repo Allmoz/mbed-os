@@ -7,8 +7,6 @@
         "psa",
         "psa-services",
         "mbedtls",
-        "mbedtls-stm",
-        "mbedtls-nuvoton",
         "psa-compliance-framework",
         "filesystem",
         "littlefs",
