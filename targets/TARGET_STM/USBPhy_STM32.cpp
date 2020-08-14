@@ -173,6 +173,14 @@ USBPhyHw::~USBPhyHw()
 
 }
 
+void USB_reenumerate()
+{
+    DigitalInOut usb_disc_pin(USB_DP, PIN_OUTPUT, PullNone, 0);
+    wait_us(10000);
+    usb_disc_pin.input();
+}
+
+
 void USBPhyHw::init(USBPhyEvents *events)
 {
     const PinMap *map = NULL;
@@ -225,6 +233,8 @@ void USBPhyHw::init(USBPhyEvents *events)
 
     __HAL_RCC_USB_CLK_ENABLE();
     map = PinMap_USB_FS;
+
+    USB_reenumerate();
 #endif
 
     // Pass instance for usage inside call back
@@ -334,9 +344,7 @@ bool USBPhyHw::powered()
 void USBPhyHw::connect()
 {
 #if (MBED_CONF_TARGET_USB_SPEED == USE_USB_NO_OTG)
-    DigitalOut usb_disc_pin(USB_DP, 1) ;
-    wait_ns(1000);
-    usb_disc_pin = 0;
+    USB_reenumerate();
 
     uint32_t wInterrupt_Mask = USB_CNTR_CTRM | USB_CNTR_WKUPM | USB_CNTR_SUSPM | USB_CNTR_ERRM |
                                USB_CNTR_SOFM | USB_CNTR_ESOFM | USB_CNTR_RESETM;
